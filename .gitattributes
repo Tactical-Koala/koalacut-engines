@@ -1,0 +1,7 @@
+# The signature covers the exact bytes of manifest.json.
+# Keep LF line endings on every PC so Windows Git can't change the bytes.
+manifest.json      text eol=lf
+manifest.json.sig  -text
+*.mjs              text eol=lf
+*.yml              text eol=lf
+*.pem              text eol=lf

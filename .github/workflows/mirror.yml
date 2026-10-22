@@ -1,0 +1,58 @@
+name: Mirror an engine
+
+# Optional backup copies. Downloads every file of one engine from its upstream link,
+# checks each sha256 against manifest.json, and publishes them as a release.
+# Nothing is compiled or changed. Afterwards, on your PC:
+#   node tools/add-file.mjs --engine <engine> --mirror-release mirror-<engine>-<version>
+#   node tools/sign.mjs
+on:
+  workflow_dispatch:
+    inputs:
+      engine:
+        description: 'Engine id from manifest.json'
+        required: true
+        type: choice
+        options: [face-yunet, onnxruntime-web, face-mediapipe]
+
+permissions:
+  contents: write
+  id-token: write
+  attestations: write
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Download and verify
+        id: dl
+        run: |
+          node tools/fetch-engine.mjs --engine "${{ inputs.engine }}" --out out --flat
+          version=$(node -e "console.log(require('./manifest.json').engines['${{ inputs.engine }}'].version)")
+          echo "tag=mirror-${{ inputs.engine }}-${version}" >> "$GITHUB_OUTPUT"
+
+      - name: Attest the files came from this workflow
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-path: 'out/*'
+
+      - name: Publish release (never replaces an existing one)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag="${{ steps.dl.outputs.tag }}"
+          if gh release view "$tag" >/dev/null 2>&1; then
+            echo "Release $tag already exists. Published mirrors are never replaced."
+            exit 1
+          fi
+          gh release create "$tag" out/* \
+            --title "$tag" \
+            --notes "Unmodified copies of the ${{ inputs.engine }} files listed in manifest.json, checked against their sha256. See BUILD-INFO.txt for the original sources and licences."
+          echo "Done. On your PC run:"
+          echo "  node tools/add-file.mjs --engine ${{ inputs.engine }} --mirror-release $tag"
+          echo "  node tools/sign.mjs"

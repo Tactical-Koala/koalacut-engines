@@ -1,0 +1,6 @@
+# Never commit the private signing key
+*.key
+*-private.pem
+manifest-signing.pem
+.downloads/
+node_modules/
