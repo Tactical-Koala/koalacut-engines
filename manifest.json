@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "updated": "2026-10-22",
+  "minKoalaCut": "0.6.0",
+  "engines": {
+    "face-yunet": {
+      "title": "Face tracking · Sharper (YuNet)",
+      "version": "2026.5.0",
+      "label": "2026may",
+      "notes": "YuNet face detector with dynamic input size (any frame size, no resizing).",
+      "license": "MIT",
+      "requires": ["onnxruntime-web"],
+      "files": [
+        {
+          "path": "face_detection_yunet_2026may.onnx",
+          "url": "https://media.githubusercontent.com/media/opencv/opencv_zoo/26cc381e4d2594bb9f47a26eb8fd96c94a13660d/models/face_detection_yunet/face_detection_yunet_2026may.onnx",
+          "sha256": "ebafce4e3c118d6554634be5c27ab333b4c047a9a8c3faf1d7cf93101c22f0f0",
+          "size": 229738,
+          "mirrors": []
+        },
+        {
+          "path": "LICENSE-yunet.txt",
+          "url": "https://raw.githubusercontent.com/opencv/opencv_zoo/26cc381e4d2594bb9f47a26eb8fd96c94a13660d/models/face_detection_yunet/LICENSE",
+          "sha256": "c83b8120c50ccbd4c4f96edf53141bdd566ebb8f8e9227e415326aa1b1aba958",
+          "size": 1085,
+          "mirrors": []
+        }
+      ]
+    },
+    "onnxruntime-web": {
+      "title": "ONNX Runtime Web (runs YuNet)",
+      "version": "FILL",
+      "notes": "WASM build of ONNX Runtime from npm. Fill with: node tools/add-file.mjs --engine onnxruntime-web --npm onnxruntime-web@<version> --file dist/<name>",
+      "license": "MIT",
+      "files": [
+        { "path": "ort.wasm.min.mjs", "url": "FILL", "sha256": "FILL", "size": 0, "mirrors": [] },
+        { "path": "ort-wasm-simd-threaded.mjs", "url": "FILL", "sha256": "FILL", "size": 0, "mirrors": [] },
+        { "path": "ort-wasm-simd-threaded.wasm", "url": "FILL", "sha256": "FILL", "size": 0, "mirrors": [] }
+      ]
+    },
+    "face-mediapipe": {
+      "title": "Face tracking · Detailed (MediaPipe)",
+      "version": "FILL",
+      "notes": "MediaPipe Face Landmarker: WASM from npm @mediapipe/tasks-vision, model from Google.",
+      "license": "Apache-2.0",
+      "files": [
+        { "path": "vision_bundle.mjs", "url": "FILL", "sha256": "FILL", "size": 0, "mirrors": [] },
+        { "path": "wasm/vision_wasm_internal.js", "url": "FILL", "sha256": "FILL", "size": 0, "mirrors": [] },
+        { "path": "wasm/vision_wasm_internal.wasm", "url": "FILL", "sha256": "FILL", "size": 0, "mirrors": [] },
+        { "path": "wasm/vision_wasm_nosimd_internal.js", "url": "FILL", "sha256": "FILL", "size": 0, "mirrors": [] },
+        { "path": "wasm/vision_wasm_nosimd_internal.wasm", "url": "FILL", "sha256": "FILL", "size": 0, "mirrors": [] },
+        { "path": "face_landmarker.task", "url": "FILL", "sha256": "FILL", "size": 0, "mirrors": [] }
+      ]
+    }
+  }
+}
